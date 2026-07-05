@@ -22,18 +22,7 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-8 text-current', styl
   }, [src]);
 
   const handleImgError = () => {
-    // Fallback chain for various possible file name variations or encodings
-    if (currentSrc === '/sin-título-1.PNG') {
-      setCurrentSrc('/sin-título-1.png');
-    } else if (currentSrc === '/sin-título-1.png') {
-      setCurrentSrc('/sin-titulo-1.PNG');
-    } else if (currentSrc === '/sin-titulo-1.PNG') {
-      setCurrentSrc('/sin-titulo-1.png');
-    } else if (currentSrc === '/sin-titulo-1.png') {
-      setCurrentSrc('/logo.png');
-    } else {
-      setUseFallback(true);
-    }
+    setUseFallback(true);
   };
 
   if (!useFallback && currentSrc) {
