@@ -30,7 +30,7 @@ const Footer: React.FC<FooterProps> = ({ onLinkClick, onAdminClick }) => {
       <div className="max-w-[1800px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
         
         <div className="md:col-span-4">
-          <Logo className="h-9 text-[#2C2A26] mb-6" />
+          <Logo className="h-9 text-[#2C2A26] mb-6" lightBg={true} />
           <p className="max-w-xs font-light leading-relaxed mb-4">
             Tejiendo muebles y piezas decorativas 100% colombianas con dedicación, tradición y alma familiar desde Cali.
           </p>

@@ -1,19 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface LogoProps {
   className?: string;
   style?: React.CSSProperties;
   src?: string;
+  lightBg?: boolean;
 }
 
-export const Logo: React.FC<LogoProps> = ({ className = 'h-8 text-current', style, src }) => {
-  if (src) {
+export const Logo: React.FC<LogoProps> = ({ className = 'h-8 text-current', style, src, lightBg = false }) => {
+  const [useFallback, setUseFallback] = useState(false);
+  const [currentSrc, setCurrentSrc] = useState<string>('');
+
+  useEffect(() => {
+    // Default to the file named exactly as the user specified, or allow custom override
+    const targetSrc = src || '/sin-título-1.PNG';
+    setCurrentSrc(targetSrc);
+    setUseFallback(false);
+  }, [src]);
+
+  const handleImgError = () => {
+    // Fallback chain for various possible file name variations or encodings
+    if (currentSrc === '/sin-título-1.PNG') {
+      setCurrentSrc('/sin-título-1.png');
+    } else if (currentSrc === '/sin-título-1.png') {
+      setCurrentSrc('/sin-titulo-1.PNG');
+    } else if (currentSrc === '/sin-titulo-1.PNG') {
+      setCurrentSrc('/sin-titulo-1.png');
+    } else if (currentSrc === '/sin-titulo-1.png') {
+      setCurrentSrc('/logo.png');
+    } else {
+      setUseFallback(true);
+    }
+  };
+
+  if (!useFallback && currentSrc) {
+    // If we're on a light background: use multiply blend mode to hide white background and keep green text
+    // If we're on a dark background: invert colors and use screen blend mode to get transparent white text
+    const filterStyle = lightBg 
+      ? {
+          mixBlendMode: 'multiply' as const,
+        }
+      : {
+          filter: 'invert(1) grayscale(1) brightness(3) contrast(100)',
+          mixBlendMode: 'screen' as const,
+        };
+
     return (
       <img 
-        src={src} 
+        src={currentSrc} 
         alt="Rattan Taller Natural" 
-        className={className} 
-        style={{ objectFit: 'contain', ...style }}
+        className={`${className} object-contain`}
+        onError={handleImgError}
+        style={{
+          ...filterStyle,
+          ...style
+        }}
       />
     );
   }

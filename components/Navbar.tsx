@@ -59,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, cartCount, onOpenCart }) =>
             className={`z-50 relative transition-colors duration-500 ${textColorClass}`}
             aria-label="Rattan Taller Natural"
           >
-            <Logo className="h-8 md:h-11 transition-all duration-500" />
+            <Logo className="h-8 md:h-11 transition-all duration-500" lightBg={scrolled || mobileMenuOpen} />
           </a>
           
           {/* Center Links - Desktop */}
