@@ -1,0 +1,6 @@
+{
+  "name": "Rattan Taller Natural",
+  "description": "Tienda de muebles y accesorios de rattan tejidos 100% a mano por artesanos en Cali, Colombia.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
