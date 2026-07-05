@@ -12,10 +12,13 @@ export const Logo: React.FC<LogoProps> = ({ className = 'h-8 text-current', styl
   const [currentSrc, setCurrentSrc] = useState<string>('');
 
   useEffect(() => {
-    // Default to the file named exactly as the user specified, or allow custom override
-    const targetSrc = src || '/sin-título-1.PNG';
-    setCurrentSrc(targetSrc);
-    setUseFallback(false);
+    // If a custom src is specified, try to render it, otherwise use the beautiful SVG logo directly
+    if (src) {
+      setCurrentSrc(src);
+      setUseFallback(false);
+    } else {
+      setUseFallback(true);
+    }
   }, [src]);
 
   const handleImgError = () => {
