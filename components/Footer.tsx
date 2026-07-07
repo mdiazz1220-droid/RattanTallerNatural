@@ -5,6 +5,8 @@
 
 
 import React, { useState } from 'react';
+import { Instagram, MessageCircle } from 'lucide-react';
+import { BRAND_NAME } from '../constants';
 
 interface FooterProps {
   onLinkClick: (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => void;
@@ -14,6 +16,7 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ onLinkClick, onAdminClick }) => {
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success'>('idle');
   const [email, setEmail] = useState('');
+  const [logoError, setLogoError] = useState(false);
 
   const handleSubscribe = () => {
     if (!email) return;
@@ -29,12 +32,52 @@ const Footer: React.FC<FooterProps> = ({ onLinkClick, onAdminClick }) => {
       <div className="max-w-[1800px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
         
         <div className="md:col-span-4">
-          <h4 className="text-2xl font-serif text-[#2C2A26] mb-6">Taller Natural</h4>
+          {!logoError ? (
+            <img 
+              src="/logo.png" 
+              alt={BRAND_NAME} 
+              onError={(e) => {
+                const img = e.currentTarget;
+                if (img.src.endsWith('/logo.png')) {
+                  img.src = '/logo.svg';
+                } else if (img.src.endsWith('/logo.svg')) {
+                  img.src = '/logo.jpg';
+                } else if (img.src.endsWith('/logo.jpg')) {
+                  img.src = '/logo.webp';
+                } else {
+                  setLogoError(true);
+                }
+              }} 
+              className="h-12 w-auto object-contain mb-6 transition-all duration-300"
+            />
+          ) : (
+            <h4 className="text-2xl font-serif text-[#2C2A26] mb-6">{BRAND_NAME}</h4>
+          )}
           <p className="max-w-xs font-light leading-relaxed mb-4">
             Tejiendo muebles y piezas decorativas 100% colombianas con dedicación, tradición y alma familiar desde Cali.
           </p>
-          <p className="text-sm font-medium text-[#2C2A26]">Cali, Valle del Cauca, Colombia</p>
-          <p className="text-xs">Sígannos en redes sociales para ver procesos de fabricación.</p>
+          <p className="text-sm font-medium text-[#2C2A26] mb-2">Cali, Valle del Cauca, Colombia</p>
+          <p className="text-xs mb-4">Sígannos en redes sociales para ver procesos de fabricación y novedades:</p>
+          <div className="flex items-center gap-4">
+            <a 
+              href="https://www.instagram.com/rattantallernatural" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full bg-[#D6D1C7]/30 hover:bg-[#D6D1C7]/60 flex items-center justify-center text-[#2C2A26] transition-all"
+              title="Instagram"
+            >
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://wa.me/573146185044?text=Hola%20Rattan%20Taller%20Natural%2C%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20muebles%20y%20accesorios." 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full bg-[#D6D1C7]/30 hover:bg-[#D6D1C7]/60 flex items-center justify-center text-[#2C2A26] transition-all"
+              title="WhatsApp"
+            >
+              <MessageCircle className="w-5 h-5" />
+            </a>
+          </div>
         </div>
 
         <div className="md:col-span-2">

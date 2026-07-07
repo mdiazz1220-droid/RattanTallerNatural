@@ -6,6 +6,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { BRAND_NAME } from '../constants';
+import { Instagram, MessageCircle } from 'lucide-react';
 
 interface NavbarProps {
   onNavClick: (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => void;
@@ -16,6 +17,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ onNavClick, cartCount, onOpenCart }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,9 +57,31 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, cartCount, onOpenCart }) =>
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 onNavClick(e, ''); // Pass empty string to just reset to home
             }}
-            className={`text-3xl font-serif font-medium tracking-tight z-50 relative transition-colors duration-500 ${textColorClass}`}
+            className="z-50 relative flex items-center"
           >
-            {BRAND_NAME}
+            {!logoError ? (
+              <img 
+                src="/logo.png" 
+                alt={BRAND_NAME} 
+                onError={(e) => {
+                  const img = e.currentTarget;
+                  if (img.src.endsWith('/logo.png')) {
+                    img.src = '/logo.svg';
+                  } else if (img.src.endsWith('/logo.svg')) {
+                    img.src = '/logo.jpg';
+                  } else if (img.src.endsWith('/logo.jpg')) {
+                    img.src = '/logo.webp';
+                  } else {
+                    setLogoError(true);
+                  }
+                }} 
+                className="h-10 md:h-12 w-auto object-contain transition-all duration-500"
+              />
+            ) : (
+              <span className={`text-3xl font-serif font-medium tracking-tight transition-colors duration-500 ${textColorClass}`}>
+                {BRAND_NAME}
+              </span>
+            )}
           </a>
           
           {/* Center Links - Desktop */}
@@ -69,9 +93,27 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, cartCount, onOpenCart }) =>
 
           {/* Right Actions */}
           <div className={`flex items-center gap-6 z-50 relative transition-colors duration-500 ${textColorClass}`}>
+            <a 
+              href="https://www.instagram.com/rattantallernatural" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:opacity-60 transition-opacity flex items-center"
+              title="Instagram"
+            >
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://wa.me/573146185044?text=Hola%20Rattan%20Taller%20Natural%2C%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20muebles%20y%20accesorios." 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:opacity-60 transition-opacity flex items-center"
+              title="WhatsApp"
+            >
+              <MessageCircle className="w-5 h-5" />
+            </a>
             <button 
               onClick={handleCartClick}
-              className="text-sm font-medium uppercase tracking-widest hover:opacity-60 transition-opacity hidden sm:block"
+              className="text-sm font-medium uppercase tracking-widest hover:opacity-60 transition-opacity hidden sm:block border-l border-current pl-6"
             >
               Carrito ({cartCount})
             </button>
@@ -109,6 +151,26 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, cartCount, onOpenCart }) =>
             >
                 Carrito ({cartCount})
             </button>
+            <div className="flex items-center gap-8 pt-12 border-t border-[#D6D1C7]/30 w-32 justify-center">
+              <a 
+                href="https://www.instagram.com/rattantallernatural" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:opacity-60 transition-opacity text-[#2C2A26]"
+                title="Instagram"
+              >
+                <Instagram className="w-6 h-6" />
+              </a>
+              <a 
+                href="https://wa.me/573146185044?text=Hola%20Rattan%20Taller%20Natural%2C%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20muebles%20y%20accesorios." 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:opacity-60 transition-opacity text-[#2C2A26]"
+                title="WhatsApp"
+              >
+                <MessageCircle className="w-6 h-6" />
+              </a>
+            </div>
           </div>
       </div>
     </>
