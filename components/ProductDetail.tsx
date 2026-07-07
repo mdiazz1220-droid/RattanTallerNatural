@@ -4,7 +4,7 @@
 */
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Product } from '../types';
 
 interface ProductDetailProps {
@@ -15,6 +15,12 @@ interface ProductDetailProps {
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack, onAddToCart }) => {
   const [selectedFinish, setSelectedFinish] = useState<string | null>('Natural');
+  const gallery = product.gallery && product.gallery.length > 0 ? product.gallery : [product.imageUrl];
+  const [activeImage, setActiveImage] = useState<string>(gallery[0]);
+
+  useEffect(() => {
+    setActiveImage((product.gallery && product.gallery.length > 0 ? product.gallery : [product.imageUrl])[0]);
+  }, [product]);
   
   const finishes = ['Natural', 'Dorado', 'Rústico'];
   const showFinishes = product.category === 'Sillas y Salas' || product.category === 'Mesas y Comedores';
@@ -36,16 +42,31 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack, onAddToC
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
           
-          {/* Left: Main Image Only */}
+          {/* Left: Main Image + Gallery Thumbnails */}
           <div className="flex flex-col gap-4">
             <div className="w-full aspect-[4/5] bg-[#EBE7DE] overflow-hidden">
               <img 
-                src={product.imageUrl} 
+                src={activeImage} 
                 alt={product.name} 
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover animate-fade-in-up"
               />
             </div>
+            {gallery.length > 1 && (
+              <div className="grid grid-cols-5 gap-3">
+                {gallery.map((url, idx) => (
+                  <button
+                    key={url + idx}
+                    onClick={() => setActiveImage(url)}
+                    className={`aspect-square overflow-hidden border-2 transition-colors ${
+                      activeImage === url ? 'border-[#2C2A26]' : 'border-transparent opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={url} alt={`${product.name} ${idx + 1}`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Right: Details */}
