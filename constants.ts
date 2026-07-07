@@ -15,9 +15,9 @@ export const PRODUCTS: Product[] = [
     longDescription: 'La Silla Acapulco Rattan es una reinterpretación de un clásico del diseño, adaptado con la calidez del rattan natural. Su estructura arqueada de hierro lacado ofrece estabilidad, mientras que el tejido artesanal abraza el cuerpo de manera cómoda y fresca. Perfecta para un rincón de lectura en tu sala o terrazas cubiertas.',
     price: 380000,
     category: 'Sillas y Salas',
-    imageUrl: '/assets/images/silla_acapulco_rattan_1783278756646.jpg',
+    imageUrl: '/src/assets/images/silla_acapulco_rattan_1783278756646.jpg',
     gallery: [
-      '/assets/images/silla_acapulco_rattan_1783278756646.jpg'
+      '/src/assets/images/silla_acapulco_rattan_1783278756646.jpg'
     ],
     features: ['Tejido 100% artesanal', 'Estructura de hierro resistente', 'Diseño ergonómico y fresco']
   },
@@ -29,9 +29,9 @@ export const PRODUCTS: Product[] = [
     longDescription: 'Inspirado en las formas fluidas de la naturaleza, el Sofá Nido combina un marco sólido de madera con un intrincado tejido trenzado de rattan premium. Diseñado en Cali por artesanos expertos, ofrece un espacio amplio y acogedor para compartir momentos inolvidables en familia.',
     price: 1450000,
     category: 'Sillas y Salas',
-    imageUrl: '/assets/images/sofa_nido_rattan_1783278806581.jpg',
+    imageUrl: '/src/assets/images/sofa_nido_rattan_1783278806581.jpg',
     gallery: [
-      '/assets/images/sofa_nido_rattan_1783278806581.jpg'
+      '/src/assets/images/sofa_nido_rattan_1783278806581.jpg'
     ],
     features: ['Rattan premium curado', 'Incluye cojines confortables', 'Sello de origen familiar en Cali']
   },
@@ -43,9 +43,9 @@ export const PRODUCTS: Product[] = [
     longDescription: 'El Butaco Alto Baruma aporta un toque rústico moderno a barras de cocina, barras de café o comedores altos. El contraste entre el hierro oscuro y la calidez de la fibra natural tejida a mano crea un balance estético perfecto y una alta durabilidad.',
     price: 290000,
     category: 'Sillas y Salas',
-    imageUrl: '/assets/images/butaco_bar_rattan_1783278787660.jpg',
+    imageUrl: '/src/assets/images/butaco_bar_rattan_1783278787660.jpg',
     gallery: [
-      '/assets/images/butaco_bar_rattan_1783278787660.jpg'
+      '/src/assets/images/butaco_bar_rattan_1783278787660.jpg'
     ],
     features: ['Ideal para barras y mesones', 'Tejido tupido de alta durabilidad', 'Protectores para pisos delicados']
   },
@@ -57,9 +57,9 @@ export const PRODUCTS: Product[] = [
     longDescription: 'La Mesa de Centro Olas evoca el movimiento sutil del agua. Su base esculpida de rattan natural en espiral sostiene una elegante superficie redonda de vidrio templado, permitiendo apreciar el trabajo artesanal desde todos los ángulos y aportando amplitud visual al espacio.',
     price: 650000,
     category: 'Mesas y Comedores',
-    imageUrl: '/assets/images/mesa_centro_olas_1783278820244.jpg',
+    imageUrl: '/src/assets/images/mesa_centro_olas_1783278820244.jpg',
     gallery: [
-      '/assets/images/mesa_centro_olas_1783278820244.jpg'
+      '/src/assets/images/mesa_centro_olas_1783278820244.jpg'
     ],
     features: ['Vidrio templado incluido', 'Diseño de base espiral autoportante', 'Acabado natural de alta protección']
   },
@@ -71,9 +71,9 @@ export const PRODUCTS: Product[] = [
     longDescription: 'El Comedor Esencia está diseñado para resistir generaciones. La cubierta de madera maciza se complementa con patas y detalles laterales tejidos con finas varas de rattan natural. Una pieza imponente que une la solidez del bosque con la delicadeza del tejido tradicional.',
     price: 2200000,
     category: 'Mesas y Comedores',
-    imageUrl: '/assets/images/comedor_esencia_1783278796849.jpg',
+    imageUrl: '/src/assets/images/comedor_esencia_1783278796849.jpg',
     gallery: [
-      '/assets/images/comedor_esencia_1783278796849.jpg'
+      '/src/assets/images/comedor_esencia_1783278796849.jpg'
     ],
     features: ['Capacidad para 4-6 personas', 'Madera maciza de origen sostenible', 'Tejido reforzado en los bordes']
   },
@@ -85,9 +85,9 @@ export const PRODUCTS: Product[] = [
     longDescription: 'Creada para transformar la iluminación de tus espacios. La Lámpara Colgante Trébol filtra la luz de manera suave a través de su tejido abierto de rattan, creando un acogedor juego de sombras que remite a la tranquilidad de los bosques nativos de Colombia.',
     price: 185000,
     category: 'Accesorios',
-    imageUrl: '/assets/images/lampara_colgante_trebol_1783278829523.jpg',
+    imageUrl: '/src/assets/images/lampara_colgante_trebol_1783278829523.jpg',
     gallery: [
-      '/assets/images/lampara_colgante_trebol_1783278829523.jpg'
+      '/src/assets/images/lampara_colgante_trebol_1783278829523.jpg'
     ],
     features: ['Proyección de sombras decorativas', 'Incluye kit eléctrico básico', 'Ligera y fácil de instalar']
   },
@@ -99,9 +99,9 @@ export const PRODUCTS: Product[] = [
     longDescription: 'Nuestra Cesta Palma es la fusión perfecta de utilidad y belleza natural. Tejida con fibra seleccionada y asas de cuero genuino colombiano, es ideal para organizar tu sala, habitación, o utilizarla como un elegante macetero.',
     price: 120000,
     category: 'Accesorios',
-    imageUrl: '/assets/images/cesta_palma_organizadora_1783278839691.jpg',
+    imageUrl: '/src/assets/images/cesta_palma_organizadora_1783278839691.jpg',
     gallery: [
-      '/assets/images/cesta_palma_organizadora_1783278839691.jpg'
+      '/src/assets/images/cesta_palma_organizadora_1783278839691.jpg'
     ],
     features: ['Asas de cuero legítimo', 'Fibra flexible y resistente', 'Multiusos decorativo']
   },
@@ -113,9 +113,9 @@ export const PRODUCTS: Product[] = [
     longDescription: 'Tus mascotas también merecen la frescura y elegancia de los materiales naturales. El Nido Pet Confort es una cama tejida con bordes elevados que proporcionan seguridad y resguardo. Su colchón acolchado está forrado con tela lavable de algodón orgánico.',
     price: 240000,
     category: 'Pets y Nidos',
-    imageUrl: '/assets/images/nido_pet_confort_1783278849305.jpg',
+    imageUrl: '/src/assets/images/nido_pet_confort_1783278849305.jpg',
     gallery: [
-      '/assets/images/nido_pet_confort_1783278849305.jpg'
+      '/src/assets/images/nido_pet_confort_1783278849305.jpg'
     ],
     features: ['Colchón lavable incluido', 'Tejido ventilado anti-olores', 'Estructura ligera y lavable']
   },
@@ -127,9 +127,9 @@ export const PRODUCTS: Product[] = [
     longDescription: 'Un refugio colgante moderno para los felinos de la casa. El Nido Colgante Mimbre se suspende de un soporte resistente o techo, brindando a tu gato la altura que ama combinada con un balanceo relajante. Una pieza única que es tanto juego como decoración.',
     price: 320000,
     category: 'Pets y Nidos',
-    imageUrl: '/assets/images/nido_colgante_mimbre_1783278859908.jpg',
+    imageUrl: '/src/assets/images/nido_colgante_mimbre_1783278859908.jpg',
     gallery: [
-      '/assets/images/nido_colgante_mimbre_1783278859908.jpg'
+      '/src/assets/images/nido_colgante_mimbre_1783278859908.jpg'
     ],
     features: ['Soporte de suspensión seguro', 'Aislante de temperatura fría', 'Tejido semi-abierto interactivo']
   }

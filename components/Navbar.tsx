@@ -6,7 +6,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { BRAND_NAME } from '../constants';
-import { Logo } from './Logo';
 
 interface NavbarProps {
   onNavClick: (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => void;
@@ -56,10 +55,9 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, cartCount, onOpenCart }) =>
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 onNavClick(e, ''); // Pass empty string to just reset to home
             }}
-            className={`z-50 relative transition-colors duration-500 ${textColorClass}`}
-            aria-label="Rattan Taller Natural"
+            className={`text-3xl font-serif font-medium tracking-tight z-50 relative transition-colors duration-500 ${textColorClass}`}
           >
-            <Logo className="h-8 md:h-11 transition-all duration-500" lightBg={scrolled || mobileMenuOpen} />
+            {BRAND_NAME}
           </a>
           
           {/* Center Links - Desktop */}

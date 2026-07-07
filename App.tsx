@@ -17,7 +17,6 @@ import JournalDetail from './components/JournalDetail';
 import CartDrawer from './components/CartDrawer';
 import Checkout from './components/Checkout';
 import { Admin } from './components/Admin';
-import WhatsAppButton from './components/WhatsAppButton';
 import { PRODUCTS } from './constants';
 import { Product, JournalArticle, ViewState } from './types';
 
@@ -182,7 +181,6 @@ function App() {
       )}
       
       <Assistant />
-      <WhatsAppButton />
       
       <CartDrawer 
         isOpen={isCartOpen}

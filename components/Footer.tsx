@@ -5,7 +5,6 @@
 
 
 import React, { useState } from 'react';
-import { Logo } from './Logo';
 
 interface FooterProps {
   onLinkClick: (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => void;
@@ -30,33 +29,12 @@ const Footer: React.FC<FooterProps> = ({ onLinkClick, onAdminClick }) => {
       <div className="max-w-[1800px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
         
         <div className="md:col-span-4">
-          <Logo className="h-9 text-[#2C2A26] mb-6" lightBg={true} />
+          <h4 className="text-2xl font-serif text-[#2C2A26] mb-6">Taller Natural</h4>
           <p className="max-w-xs font-light leading-relaxed mb-4">
             Tejiendo muebles y piezas decorativas 100% colombianas con dedicación, tradición y alma familiar desde Cali.
           </p>
-          <div className="space-y-4 pt-2">
-            <p className="text-sm font-medium text-[#2C2A26]">Cali, Valle del Cauca, Colombia</p>
-            <div className="flex flex-col gap-3">
-              <a 
-                href="https://www.instagram.com/rattantallernatural" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="flex items-center gap-2.5 text-sm text-[#5D5A53] hover:text-[#2C2A26] transition-colors group"
-              >
-                <span className="w-6 h-6 flex items-center justify-center border border-[#5D5A53]/30 rounded-full text-[10px] group-hover:border-[#2C2A26] transition-colors">IG</span>
-                <span className="font-medium">@rattantallernatural</span>
-              </a>
-              <a 
-                href="https://wa.me/573146185044?text=Hola%20Rattan%20Taller%20Natural,%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20muebles." 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="flex items-center gap-2.5 text-sm text-[#5D5A53] hover:text-[#2C2A26] transition-colors group"
-              >
-                <span className="w-6 h-6 flex items-center justify-center border border-[#5D5A53]/30 rounded-full text-[10px] group-hover:border-[#2C2A26] transition-colors">WA</span>
-                <span className="font-medium">+57 314 618 5044</span>
-              </a>
-            </div>
-          </div>
+          <p className="text-sm font-medium text-[#2C2A26]">Cali, Valle del Cauca, Colombia</p>
+          <p className="text-xs">Sígannos en redes sociales para ver procesos de fabricación.</p>
         </div>
 
         <div className="md:col-span-2">
