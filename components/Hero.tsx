@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
       {/* Background Image - Serene Rattan and Home Interior */}
       <div className="absolute inset-0 w-full h-full">
         <img 
-            src="/src/assets/images/hero_rattan_living_room_1783278779115.jpg" 
+            src="/assets/images/hero_rattan_living_room_1783278779115.jpg" 
             alt="Interiores con rattan y mimbre" 
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover grayscale-[0.05] contrast-[0.9] brightness-[0.85] animate-[pulse_15s_ease-in-out_infinite_alternate]"
