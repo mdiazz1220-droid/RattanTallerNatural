@@ -27,7 +27,7 @@ const About: React.FC = () => {
             Hoy, conservamos ese origen cercano y humano, combinándolo con una estructura de alta calidad, procesos de curado muy cuidadosos de la fibra y un compromiso constante con la excelencia. Seguimos creando cada pieza a mano en Cali, liderados por nuestro fundador José Lidier Salazar.
           </p>
           <img 
-            src="/src/assets/images/manos_tejiendo_rattan_1783278946075.jpg" 
+            src="/assets/images/manos_tejiendo_rattan_1783278946075.jpg" 
             alt="Artesano tejiendo rattan a mano" 
             referrerPolicy="no-referrer"
             className="w-full h-[400px] object-cover grayscale-[0.05] contrast-[0.95] brightness-100 mt-12"
@@ -42,7 +42,7 @@ const About: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[80vh]">
         <div className="order-2 lg:order-1 relative h-[500px] lg:h-auto overflow-hidden group">
            <img 
-             src="/src/assets/images/textura_tejido_rattan_1783278957328.jpg" 
+             src="/assets/images/textura_tejido_rattan_1783278957328.jpg" 
              alt="Textura de fibra de rattan tejida" 
              referrerPolicy="no-referrer"
              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105"
@@ -71,7 +71,7 @@ const About: React.FC = () => {
         </div>
         <div className="relative h-[500px] lg:h-auto overflow-hidden group">
            <img 
-             src="/src/assets/images/hero_rattan_living_room_1783278779115.jpg" 
+             src="/assets/images/hero_rattan_living_room_1783278779115.jpg" 
              alt="Hogar minimalista con madera y mimbre" 
              referrerPolicy="no-referrer"
              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105 brightness-95"
