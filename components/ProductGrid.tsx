@@ -8,8 +8,6 @@ import React, { useState, useMemo } from 'react';
 import { Product } from '../types';
 import ProductCard from './ProductCard';
 
-const categories = ['Todos', 'Sillas y Salas', 'Mesas y Comedores', 'Accesorios', 'Pets y Nidos'];
-
 interface ProductGridProps {
   onProductClick: (product: Product) => void;
   products: Product[];
@@ -17,6 +15,14 @@ interface ProductGridProps {
 
 const ProductGrid: React.FC<ProductGridProps> = ({ onProductClick, products }) => {
   const [activeCategory, setActiveCategory] = useState('Todos');
+
+  const categories = useMemo(() => {
+    const uniqueFromProducts = Array.from(new Set(products.map((p) => p.category).filter(Boolean)));
+    if (uniqueFromProducts.length > 0) {
+      return ['Todos', ...uniqueFromProducts];
+    }
+    return ['Todos', 'Sillas y Salas', 'Mesas y Comedores', 'Accesorios', 'Pets y Nidos'];
+  }, [products]);
 
   const filteredProducts = useMemo(() => {
     if (activeCategory === 'Todos') return products;

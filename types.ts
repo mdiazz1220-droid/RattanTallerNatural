@@ -12,7 +12,7 @@ export interface Product {
   description: string;
   longDescription?: string;
   price: number;
-  category: 'Sillas y Salas' | 'Mesas y Comedores' | 'Accesorios' | 'Pets y Nidos';
+  category: string;
   imageUrl: string;
   gallery?: string[];
   features: string[];

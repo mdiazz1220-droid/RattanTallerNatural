@@ -20,6 +20,7 @@ import {
   Loader2,
   X,
   Star,
+  Tags,
 } from 'lucide-react';
 import { signIn, signOut, getCurrentSession, onAuthStateChange } from '../services/authService';
 import {
@@ -37,8 +38,6 @@ interface AdminProps {
   onResetToDefaults: () => void | Promise<void>;
   onRefresh: () => void | Promise<void>;
 }
-
-const CATEGORIES = ['Sillas y Salas', 'Mesas y Comedores', 'Accesorios', 'Pets y Nidos'] as const;
 
 export const Admin: React.FC<AdminProps> = ({
   products,
@@ -62,7 +61,7 @@ export const Admin: React.FC<AdminProps> = ({
   const [formName, setFormName] = useState('');
   const [formTagline, setFormTagline] = useState('');
   const [formPrice, setFormPrice] = useState(0);
-  const [formCategory, setFormCategory] = useState<typeof CATEGORIES[number]>('Sillas y Salas');
+  const [formCategory, setFormCategory] = useState<string>('Sillas y Salas');
   const [formDescription, setFormDescription] = useState('');
   const [formLongDescription, setFormLongDescription] = useState('');
   const [formFeatures, setFormFeatures] = useState<string[]>([]);
@@ -72,7 +71,42 @@ export const Admin: React.FC<AdminProps> = ({
   const [dragActive, setDragActive] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
+  // Category Manager State
+  const [isCategoryManagerOpen, setIsCategoryManagerOpen] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const [editingCategory, setEditingCategory] = useState<string | null>(null);
+  const [tempCategoryName, setTempCategoryName] = useState('');
+
+  const [categories, setCategories] = useState<string[]>(() => {
+    const saved = localStorage.getItem('rattan_categories');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    const defaults = ['Sillas y Salas', 'Mesas y Comedores', 'Accesorios', 'Pets y Nidos'];
+    const uniqueFromProducts = Array.from(new Set(products.map((p) => p.category).filter(Boolean)));
+    return Array.from(new Set([...defaults, ...uniqueFromProducts]));
+  });
+
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    localStorage.setItem('rattan_categories', JSON.stringify(categories));
+  }, [categories]);
+
+  useEffect(() => {
+    const uniqueFromProducts = Array.from(new Set(products.map((p) => p.category).filter(Boolean)));
+    if (uniqueFromProducts.length > 0) {
+      setCategories((prev) => {
+        const merged = Array.from(new Set([...prev, ...uniqueFromProducts]));
+        localStorage.setItem('rattan_categories', JSON.stringify(merged));
+        return merged;
+      });
+    }
+  }, [products]);
 
   useEffect(() => {
     getCurrentSession().then((session) => setIsAuthenticated(!!session));
@@ -97,13 +131,130 @@ export const Admin: React.FC<AdminProps> = ({
     await signOut();
   };
 
+  // Category Actions
+  const handleAddCategory = () => {
+    const name = newCategoryName.trim();
+    if (!name) return;
+    if (categories.some((c) => c.toLowerCase() === name.toLowerCase())) {
+      alert('Esta categoría ya existe.');
+      return;
+    }
+    setCategories([...categories, name]);
+    setNewCategoryName('');
+    showNotification(`Categoría "${name}" agregada con éxito.`);
+  };
+
+  const handleSaveCategoryRename = async (oldName: string) => {
+    const newName = tempCategoryName.trim();
+    if (!newName) return;
+    if (oldName === newName) {
+      setEditingCategory(null);
+      return;
+    }
+    if (categories.some((c) => c !== oldName && c.toLowerCase() === newName.toLowerCase())) {
+      alert('Ya existe otra categoría con ese nombre.');
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const productsToUpdate = products.filter((p) => p.category === oldName);
+      if (productsToUpdate.length > 0) {
+        const updatePromises = productsToUpdate.map((p) => {
+          const updatedProduct = { ...p, category: newName };
+          return updateProduct(updatedProduct);
+        });
+        await Promise.all(updatePromises);
+        
+        const updatedList = products.map((p) =>
+          p.category === oldName ? { ...p, category: newName } : p
+        );
+        onProductsChange(updatedList);
+      }
+
+      const updatedCats = categories.map((c) => (c === oldName ? newName : c));
+      setCategories(updatedCats);
+      setEditingCategory(null);
+      showNotification(`Categoría renombrada a "${newName}".`);
+    } catch (err) {
+      alert('No se pudieron actualizar los productos de la categoría en Supabase.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleDeleteCategory = async (catToDelete: string) => {
+    if (categories.length <= 1) {
+      alert('Debe haber al menos una categoría en el sistema.');
+      return;
+    }
+
+    const productsInCat = products.filter((p) => p.category === catToDelete);
+    let targetCat = '';
+
+    if (productsInCat.length > 0) {
+      const remainingCats = categories.filter((c) => c !== catToDelete);
+      const listStr = remainingCats.map((c, i) => `${i + 1}. ${c}`).join('\n');
+      const response = prompt(
+        `La categoría "${catToDelete}" tiene ${productsInCat.length} productos.\n\n` +
+          `Escribe el número o el nombre exacto de la categoría a la que deseas mover estos productos:\n\n` +
+          `${listStr}`
+      );
+
+      if (response === null) return; // Canceló
+
+      const selectedIdx = parseInt(response.trim(), 10) - 1;
+      if (!isNaN(selectedIdx) && selectedIdx >= 0 && selectedIdx < remainingCats.length) {
+        targetCat = remainingCats[selectedIdx];
+      } else {
+        const found = remainingCats.find(
+          (c) => c.toLowerCase() === response.trim().toLowerCase()
+        );
+        if (found) {
+          targetCat = found;
+        } else {
+          alert('Selección inválida. Cancelando eliminación de la categoría.');
+          return;
+        }
+      }
+    } else {
+      if (!confirm(`¿Estás seguro de que deseas eliminar la categoría vacía "${catToDelete}"?`)) {
+        return;
+      }
+    }
+
+    setIsSaving(true);
+    try {
+      if (productsInCat.length > 0 && targetCat) {
+        const updatePromises = productsInCat.map((p) => {
+          const updatedProduct = { ...p, category: targetCat };
+          return updateProduct(updatedProduct);
+        });
+        await Promise.all(updatePromises);
+
+        const updatedList = products.map((p) =>
+          p.category === catToDelete ? { ...p, category: targetCat } : p
+        );
+        onProductsChange(updatedList);
+      }
+
+      const updatedCats = categories.filter((c) => c !== catToDelete);
+      setCategories(updatedCats);
+      showNotification(`Categoría "${catToDelete}" eliminada correctamente.`);
+    } catch (err) {
+      alert('Error actualizando los productos de la categoría en Supabase.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const startEdit = (product: Product) => {
     setEditingProduct(product);
     setIsCreating(false);
     setFormName(product.name);
     setFormTagline(product.tagline);
     setFormPrice(product.price);
-    setFormCategory(product.category as typeof CATEGORIES[number]);
+    setFormCategory(product.category);
     setFormDescription(product.description);
     setFormLongDescription(product.longDescription || '');
     setFormFeatures(product.features || []);
@@ -117,7 +268,7 @@ export const Admin: React.FC<AdminProps> = ({
     setFormName('');
     setFormTagline('');
     setFormPrice(0);
-    setFormCategory('Sillas y Salas');
+    setFormCategory(categories[0] || 'Sillas y Salas');
     setFormDescription('');
     setFormLongDescription('');
     setFormFeatures([]);
@@ -413,6 +564,13 @@ export const Admin: React.FC<AdminProps> = ({
               <span>Nuevo Producto</span>
             </button>
             <button
+              onClick={() => setIsCategoryManagerOpen(!isCategoryManagerOpen)}
+              className="flex items-center gap-2 border border-[#2C2A26] bg-[#EBE7DE] text-[#2C2A26] px-5 py-3 text-xs uppercase tracking-widest hover:bg-[#2C2A26] hover:text-[#F5F2EB] transition-all"
+            >
+              <Tags className="w-4 h-4" />
+              <span>Categorías</span>
+            </button>
+            <button
               onClick={handleLogout}
               className="flex items-center gap-2 border border-[#A8A29E] text-[#5D5A53] px-5 py-3 text-xs uppercase tracking-widest hover:border-red-400 hover:text-red-600 transition-all"
             >
@@ -421,6 +579,132 @@ export const Admin: React.FC<AdminProps> = ({
             </button>
           </div>
         </div>
+
+        {isCategoryManagerOpen && (
+          <div className="bg-[#EBE7DE] border border-[#D6D1C7] p-6 md:p-10 shadow-xl space-y-8 animate-slide-up-fade">
+            <div className="flex items-center justify-between pb-4 border-b border-[#D6D1C7]">
+              <div className="space-y-1">
+                <h2 className="text-xl md:text-2xl font-serif text-[#2C2A26] flex items-center gap-2">
+                  <Tags className="w-5 h-5 text-[#2C2A26]" />
+                  <span>Gestión de Categorías</span>
+                </h2>
+                <p className="text-xs text-[#5D5A53]">
+                  Agrega, renombra o elimina categorías. Los cambios se sincronizarán con los productos automáticamente.
+                </p>
+              </div>
+              <button
+                onClick={() => setIsCategoryManagerOpen(false)}
+                className="text-[#5D5A53] hover:text-[#2C2A26] text-xs uppercase tracking-widest font-medium transition-colors"
+              >
+                Cerrar
+              </button>
+            </div>
+
+            {/* Crear nueva categoría */}
+            <div className="bg-white border border-[#D6D1C7] p-6 space-y-4">
+              <h3 className="text-xs uppercase tracking-widest text-[#2C2A26] font-medium">Crear Nueva Categoría</h3>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="text"
+                  placeholder="Ej. Colección de Verano, Iluminación, Nidos..."
+                  value={newCategoryName}
+                  onChange={(e) => setNewCategoryName(e.target.value)}
+                  className="flex-1 bg-white border border-[#D6D1C7] focus:border-[#2C2A26] px-4 py-3 text-sm outline-none transition-colors text-[#2C2A26]"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleAddCategory();
+                    }
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={handleAddCategory}
+                  className="bg-[#2C2A26] text-[#F5F2EB] px-6 py-3 hover:bg-[#444] transition-colors text-xs uppercase tracking-widest font-medium flex items-center justify-center gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Agregar</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Listado de categorías */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {categories.map((cat) => {
+                const count = products.filter((p) => p.category === cat).length;
+                const isEditing = editingCategory === cat;
+                return (
+                  <div
+                    key={cat}
+                    className="bg-white border border-[#D6D1C7] p-5 flex items-center justify-between gap-4 shadow-sm"
+                  >
+                    {isEditing ? (
+                      <div className="flex-1 flex gap-2">
+                        <input
+                          type="text"
+                          value={tempCategoryName}
+                          onChange={(e) => setTempCategoryName(e.target.value)}
+                          className="flex-1 bg-[#F5F2EB] border border-[#D6D1C7] focus:border-[#2C2A26] px-3 py-2 text-sm outline-none text-[#2C2A26]"
+                          autoFocus
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              handleSaveCategoryRename(cat);
+                            } else if (e.key === 'Escape') {
+                              setEditingCategory(null);
+                            }
+                          }}
+                        />
+                        <button
+                          onClick={() => handleSaveCategoryRename(cat)}
+                          className="bg-emerald-750 text-white p-2.5 hover:bg-emerald-800 transition-colors"
+                          title="Guardar"
+                        >
+                          <Check className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => setEditingCategory(null)}
+                          className="bg-gray-200 text-gray-700 p-2.5 hover:bg-gray-300 transition-colors"
+                          title="Cancelar"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex-1">
+                          <span className="font-serif text-[#2C2A26] font-medium text-base">{cat}</span>
+                          <span className="ml-2.5 text-xs text-[#A8A29E] font-light font-mono">
+                            ({count} {count === 1 ? 'producto' : 'productos'})
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <button
+                            onClick={() => {
+                              setEditingCategory(cat);
+                              setTempCategoryName(cat);
+                            }}
+                            className="p-2 border border-[#D6D1C7] text-[#5D5A53] hover:text-[#2C2A26] hover:border-[#2C2A26] transition-colors"
+                            title="Renombrar"
+                          >
+                            <Edit2 className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteCategory(cat)}
+                            className="p-2 border border-[#D6D1C7] text-red-600 hover:bg-red-50 hover:border-red-300 transition-colors"
+                            title="Eliminar"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {(isCreating || editingProduct) && (
           <div className="bg-[#EBE7DE] border border-[#D6D1C7] p-6 md:p-10 shadow-xl space-y-8 animate-slide-up-fade">
@@ -455,10 +739,10 @@ export const Admin: React.FC<AdminProps> = ({
                     <label className="block text-xs uppercase tracking-widest text-[#5D5A53] mb-2 font-medium">Categoría *</label>
                     <select
                       value={formCategory}
-                      onChange={(e) => setFormCategory(e.target.value as typeof CATEGORIES[number])}
+                      onChange={(e) => setFormCategory(e.target.value)}
                       className="w-full bg-white border border-[#D6D1C7] focus:border-[#2C2A26] px-4 py-3 text-sm outline-none transition-colors text-[#2C2A26]"
                     >
-                      {CATEGORIES.map((cat) => (
+                      {categories.map((cat) => (
                         <option key={cat} value={cat}>{cat}</option>
                       ))}
                     </select>

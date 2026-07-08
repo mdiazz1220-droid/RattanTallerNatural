@@ -23,7 +23,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack, onAddToC
   }, [product]);
   
   const finishes = ['Natural', 'Dorado', 'Rústico'];
-  const showFinishes = product.category === 'Sillas y Salas' || product.category === 'Mesas y Comedores';
+  const showFinishes = 
+    product.category.toLowerCase().includes('silla') || 
+    product.category.toLowerCase().includes('sala') || 
+    product.category.toLowerCase().includes('mesa') || 
+    product.category.toLowerCase().includes('comedor');
 
   return (
     <div className="pt-24 min-h-screen bg-[#F5F2EB] animate-fade-in-up">
