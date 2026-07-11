@@ -31,17 +31,18 @@ const Footer: React.FC<FooterProps> = ({ onLinkClick, onAdminClick }) => {
     <footer className="bg-[#EBE7DE] pt-24 pb-12 px-6 text-[#5D5A53]">
       <div className="max-w-[1800px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
         
-       <div className="md:col-span-4">
-  {!logoError ? (
-    <img 
-      src="/assets/images/logo_1783286277414.png" 
-      alt={BRAND_NAME} 
-      onError={() => setLogoError(true)} 
-      className="h-12 w-auto object-contain mb-6 transition-all duration-300"
-    />
-  ) : (
-    <h4 className="text-2xl font-serif text-[#2C2A26] mb-6">{BRAND_NAME}</h4>
-  )}
+        <div className="md:col-span-4">
+          {!logoError ? (
+            <img 
+              src="/assets/images/logo_1783286277414.png" 
+              alt={BRAND_NAME} 
+              onError={() => setLogoError(true)} 
+              className="h-12 w-auto object-contain mb-6 transition-all duration-300"
+            />
+          ) : (
+            <h4 className="text-2xl font-serif text-[#2C2A26] mb-6">{BRAND_NAME}</h4>
+          )}
+          <p className="max-w-xs font-light leading-relaxed mb-4">
             Tejiendo muebles y piezas decorativas 100% colombianas con dedicación, tradición y alma familiar desde Cali.
           </p>
           <p className="text-sm font-medium text-[#2C2A26] mb-2">Cali, Valle del Cauca, Colombia</p>

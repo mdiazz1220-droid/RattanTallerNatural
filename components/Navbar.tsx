@@ -60,18 +60,17 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, cartCount, onOpenCart }) =>
             className="z-50 relative flex items-center"
           >
             {!logoError ? (
-  <img 
-    src="/assets/images/logo_1783286277414.png" 
-    alt={BRAND_NAME} 
-    onError={() => setLogoError(true)} 
-    className="h-10 md:h-12 w-auto object-contain transition-all duration-500"
-  />
-) : (
-  <span className={`text-3xl font-serif font-medium tracking-tight transition-colors duration-500 ${textColorClass}`}>
-    {BRAND_NAME}
-  </span>
-)}
-            
+              <img 
+                src="/assets/images/logo_1783286277414.png" 
+                alt={BRAND_NAME} 
+                onError={() => setLogoError(true)} 
+                className="h-10 md:h-12 w-auto object-contain transition-all duration-500"
+              />
+            ) : (
+              <span className={`text-3xl font-serif font-medium tracking-tight transition-colors duration-500 ${textColorClass}`}>
+                {BRAND_NAME}
+              </span>
+            )}
           </a>
           
           {/* Center Links - Desktop */}
