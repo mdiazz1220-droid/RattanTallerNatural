@@ -52,7 +52,7 @@ export const sendMessageToGemini = async (history: {role: string, text: string}[
     const ai = new GoogleGenAI({ apiKey });
     
     const chat = ai.chats.create({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3.5-flash',
       config: {
         systemInstruction: getSystemInstruction(),
       },
