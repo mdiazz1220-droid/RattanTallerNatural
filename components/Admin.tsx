@@ -385,8 +385,8 @@ export const Admin: React.FC<AdminProps> = ({
       alert('El nombre del producto es obligatorio.');
       return;
     }
-    if (formPrice <= 0) {
-      alert('El precio debe ser mayor a cero.');
+    if (formPrice < 0) {
+      alert('El precio no puede ser negativo.');
       return;
     }
     if (formGallery.length === 0) {
@@ -757,7 +757,7 @@ export const Admin: React.FC<AdminProps> = ({
                       <input
                         type="number"
                         required
-                        min="1"
+                        min="0"
                         value={formPrice}
                         onChange={(e) => setFormPrice(Number(e.target.value))}
                         placeholder="Ej. 380000"
