@@ -6,16 +6,20 @@
 
 import { GoogleGenAI } from "@google/genai";
 import { PRODUCTS } from '../constants';
+import { fetchProducts } from './productsService';
+import { Product } from '../types';
 
-const getSystemInstruction = () => {
-  let activeProducts = PRODUCTS;
+const getSystemInstruction = async () => {
+  let activeProducts: Product[] = PRODUCTS;
   try {
-    const saved = localStorage.getItem('rattan_products');
-    if (saved) {
-      activeProducts = JSON.parse(saved);
+    // Trae el catálogo real y actualizado desde Supabase
+    const liveProducts = await fetchProducts();
+    if (liveProducts && liveProducts.length > 0) {
+      activeProducts = liveProducts;
     }
   } catch (e) {
-    // Fail-safe for non-browser/SSR environments
+    // Si Supabase falla, usamos el catálogo de respaldo para que el asistente no se rompa
+    console.warn("No se pudo cargar el catálogo en vivo para el asistente, usando respaldo:", e);
   }
 
   const productContext = activeProducts.map(p => 
@@ -24,7 +28,7 @@ const getSystemInstruction = () => {
 
   return `Eres el Asistente Virtual para "Rattan Taller Natural", un taller familiar tradicional en Cali, Colombia que teje hermosos muebles y accesorios de rattan y mimbre.
   Tu tono debe ser muy cálido, acogedor, respetuoso y servicial. Habla siempre en ESPAÑOL.
-  Destaca que nuestros productos son tejidos 100% a mano en Cali y que coordinamos visitas en Cali  y envios a nivel nacional, definiendo los cojines y acabados personalizados por WhatsApp.
+  Destaca que nuestros productos son tejidos 100% a mano en Cali y que coordinamos envíos en Cali (gratis) y a nivel nacional, definiendo los cojines y acabados personalizados por WhatsApp.
   
   Aquí está nuestro catálogo actual:
   ${productContext}
@@ -50,11 +54,12 @@ export const sendMessageToGemini = async (history: {role: string, text: string}[
     }
 
     const ai = new GoogleGenAI({ apiKey });
+    const systemInstruction = await getSystemInstruction();
     
     const chat = ai.chats.create({
       model: 'gemini-3.5-flash',
       config: {
-        systemInstruction: getSystemInstruction(),
+        systemInstruction,
       },
       history: history.map(h => ({
         role: h.role,
