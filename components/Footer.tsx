@@ -84,7 +84,7 @@ const Footer: React.FC<FooterProps> = ({ onLinkClick, onAdminClick }) => {
           <ul className="space-y-4 font-light">
             <li><a href="#about" onClick={(e) => onLinkClick(e, 'about')} className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Sobre Nosotros</a></li>
             <li><a href="#about" onClick={(e) => onLinkClick(e, 'about')} className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Nuestra Historia</a></li>
-            <li><a href="#journal" onClick={(e) => onLinkClick(e, 'journal')} className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Saberes y Consejos</a></li>
+            <li><a href="#Contacto" onClick={(e) => onLinkClick(e, 'journal')} className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Saberes y Consejos</a></li>
           </ul>
         </div>
 
