@@ -141,7 +141,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     title: "El Arte del Rattan y su Cuidado Natural",
     date: "Julio 5, 2026",
     excerpt: "Guía práctica para mantener tus muebles de fibra natural siempre brillantes y resistentes.",
-    image: "/assets/images/nido.jpge",
+    image: "/assets/images/nido.jpeg",
     content: React.createElement(React.Fragment, null,
       React.createElement("p", { className: "mb-6 first-letter:text-5xl first-letter:font-serif first-letter:mr-3 first-letter:float-left text-[#5D5A53]" },
         "Las fibras naturales como el rattan y el mimbre traen la frescura del bosque directamente a tu sala de estar. Son materiales vivos, flexibles y extremadamente duraderos, pero requieren de un cuidado amoroso para mantener su elasticidad y brillo característico."
@@ -188,7 +188,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     title: "La Magia de los Nidos para Mascotas",
     date: "Junio 15, 2026",
     excerpt: "Nuestra nueva línea nido redefine el descanso y diversión de tus gatos y perros.",
-    image: "/assets/images/nido.jpge",
+    image: "/assets/images/nido.jpeg",
     content: React.createElement(React.Fragment, null,
       React.createElement("p", { className: "mb-6 text-[#5D5A53]" },
         "Nuestras mascotas buscan instintivamente espacios circulares y orgánicos para dormir. En la naturaleza, un nido es sinónimo de protección, frescura y cobijo. De allí nace nuestra nueva línea de nidos colgantes y camas circulares."
