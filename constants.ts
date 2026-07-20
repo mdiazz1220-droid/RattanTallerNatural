@@ -141,7 +141,7 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
     title: "El Arte del Rattan y su Cuidado Natural",
     date: "Julio 5, 2026",
     excerpt: "Guía práctica para mantener tus muebles de fibra natural siempre brillantes y resistentes.",
-    image: "https://images.unsplash.com/photo-1617791160505-6f00504e3519?auto=format&fit=crop&q=80&w=1000",
+    image: "/assets/images/nido.jpg",
     content: React.createElement(React.Fragment, null,
       React.createElement("p", { className: "mb-6 first-letter:text-5xl first-letter:font-serif first-letter:mr-3 first-letter:float-left text-[#5D5A53]" },
         "Las fibras naturales como el rattan y el mimbre traen la frescura del bosque directamente a tu sala de estar. Son materiales vivos, flexibles y extremadamente duraderos, pero requieren de un cuidado amoroso para mantener su elasticidad y brillo característico."
