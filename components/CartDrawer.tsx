@@ -16,7 +16,7 @@ interface CartDrawerProps {
 }
 
 const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, items, onRemoveItem, onCheckout }) => {
-  const total = items.reduce((sum, item) => sum + item.price, 0);
+  
 
   return (
     <>
@@ -66,7 +66,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, items, onRemov
                   <div>
                     <div className="flex justify-between items-start">
                         <h3 className="font-serif text-[#2C2A26]">{item.name}</h3>
-                        <span className="text-sm font-light text-[#2C2A26]">${item.price.toLocaleString('es-CO')} COP</span>
+                   
                     </div>
                     <p className="text-xs text-[#A8A29E] uppercase tracking-widest mt-1">{item.category}</p>
                   </div>
@@ -84,17 +84,14 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, items, onRemov
 
         {/* Footer */}
         <div className="p-6 border-t border-[#D6D1C7] bg-[#EBE7DE]/30">
-          <div className="flex justify-between items-center mb-6">
-            <span className="text-sm font-medium uppercase tracking-widest text-[#5D5A53]">Subtotal</span>
-            <span className="text-xl font-serif text-[#2C2A26]">${total.toLocaleString('es-CO')} COP</span>
-          </div>
+      
           <p className="text-xs text-[#A8A29E] mb-6 text-center">Envío y cotización final a coordinar por WhatsApp.</p>
           <button 
             onClick={onCheckout}
             disabled={items.length === 0}
             className="w-full py-4 bg-[#2C2A26] text-[#F5F2EB] uppercase tracking-widest text-sm font-medium hover:bg-[#433E38] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Ir a Pagar
+            Solicitar Cotización
           </button>
         </div>
       </div>
