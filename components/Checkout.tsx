@@ -42,7 +42,7 @@ const Checkout: React.FC<CheckoutProps> = ({ items, onBack }) => {
           </div>
           <h2 className="text-3xl font-serif text-[#2C2A26] mb-4">¡Cotización Recibida!</h2>
           <p className="text-[#5D5A53] font-light leading-relaxed mb-8">
-            Muchas gracias por elegir Rattan Taller Natural. Hemos registrado tu solicitud de cotización. <span className="font-semibold text-[#2C2A26]">${total.toLocaleString('es-CO')} COP</span>.
+            Muchas gracias por elegir Rattan Taller Natural. Hemos registrado tu solicitud de cotización.
           </p>
           <p className="text-[#5D5A53] font-light leading-relaxed mb-8 text-sm">
             Uno de nuestros artesanos se comunicará contigo vía WhatsApp al número <span className="font-semibold text-[#2C2A26]">{formData.whatsapp}</span> para finalizar el diseño, acordar detalles de entrega en Cali (o envío nacional) y coordinar el pago.
@@ -204,8 +204,7 @@ const Checkout: React.FC<CheckoutProps> = ({ items, onBack }) => {
             </div>
 
             <div className="border-t border-[#D6D1C7] pt-6 space-y-2">
-              <div className="border-t border-[#D6D1C7] pt-6 space-y-2">
-  <div className="flex justify-between text-sm text-[#5D5A53]">
+                <div className="flex justify-between text-sm text-[#5D5A53]">
      <span>Envío</span>
      <span className="italic">Por acordar (Gratis en Cali)</span>
   </div>
@@ -218,9 +217,7 @@ const Checkout: React.FC<CheckoutProps> = ({ items, onBack }) => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      );
 };
 
 export default Checkout;
