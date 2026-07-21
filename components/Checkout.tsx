@@ -24,9 +24,7 @@ const Checkout: React.FC<CheckoutProps> = ({ items, onBack }) => {
     notes: ''
   });
 
-  const subtotal = items.reduce((sum, item) => sum + item.price, 0);
-  const shipping = 0; // Gratis en Cali, a coordinar para resto del país
-  const total = subtotal + shipping;
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +42,7 @@ const Checkout: React.FC<CheckoutProps> = ({ items, onBack }) => {
           </div>
           <h2 className="text-3xl font-serif text-[#2C2A26] mb-4">¡Cotización Recibida!</h2>
           <p className="text-[#5D5A53] font-light leading-relaxed mb-8">
-            Muchas gracias por elegir Rattan Taller Natural. Hemos registrado tu solicitud de cotización por un valor estimado de <span className="font-semibold text-[#2C2A26]">${total.toLocaleString('es-CO')} COP</span>.
+            Muchas gracias por elegir Rattan Taller Natural. Hemos registrado tu solicitud de cotización. <span className="font-semibold text-[#2C2A26]">${total.toLocaleString('es-CO')} COP</span>.
           </p>
           <p className="text-[#5D5A53] font-light leading-relaxed mb-8 text-sm">
             Uno de nuestros artesanos se comunicará contigo vía WhatsApp al número <span className="font-semibold text-[#2C2A26]">{formData.whatsapp}</span> para finalizar el diseño, acordar detalles de entrega en Cali (o envío nacional) y coordinar el pago.
@@ -63,7 +61,7 @@ const Checkout: React.FC<CheckoutProps> = ({ items, onBack }) => {
   const isFormValid = formData.email && formData.name && formData.lastName && formData.address && formData.whatsapp;
 
   return (
-    <div className="min-h-screen pt-24 pb-24 px-6 bg-[#F5F2EB] animate-fade-in-up">
+    <div className="min-h-screen pt-36 md:pt-40 pb-24 px-6 bg-[#F5F2EB] animate-fade-in-up">
       <div className="max-w-6xl mx-auto">
         <button 
           onClick={onBack}
@@ -179,7 +177,7 @@ const Checkout: React.FC<CheckoutProps> = ({ items, onBack }) => {
                   disabled={!isFormValid}
                   className="w-full py-5 bg-[#2C2A26] text-[#F5F2EB] uppercase tracking-widest text-sm font-medium hover:bg-[#433E38] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Solicitar por WhatsApp — ${total.toLocaleString('es-CO')} COP
+                  Solicitar por WhatsApp
                 </button>
               </div>
             </form>
@@ -200,29 +198,22 @@ const Checkout: React.FC<CheckoutProps> = ({ items, onBack }) => {
                        <h3 className="font-serif text-[#2C2A26] text-base">{item.name}</h3>
                        <p className="text-xs text-[#A8A29E]">{item.category}</p>
                     </div>
-                    <span className="text-sm text-[#5D5A53]">${item.price.toLocaleString('es-CO')} COP</span>
+                    
                  </div>
                ))}
             </div>
 
             <div className="border-t border-[#D6D1C7] pt-6 space-y-2">
-              <div className="flex justify-between text-sm text-[#5D5A53]">
-                 <span>Subtotal</span>
-                 <span>${subtotal.toLocaleString('es-CO')} COP</span>
-              </div>
-              <div className="flex justify-between text-sm text-[#5D5A53]">
-                 <span>Envío</span>
-                 <span className="italic">Por acordar (Gratis en Cali)</span>
-              </div>
-            </div>
-            
-            <div className="border-t border-[#D6D1C7] mt-6 pt-6">
-               <div className="flex justify-between items-center">
-                 <span className="font-serif text-xl text-[#2C2A26]">Total Estimado</span>
-                 <div className="flex items-end gap-2">
-                   <span className="text-xs text-[#A8A29E] mb-1">COP</span>
-                   <span className="font-serif text-2xl text-[#2C2A26]">${total.toLocaleString('es-CO')}</span>
-                 </div>
+              <div className="border-t border-[#D6D1C7] pt-6 space-y-2">
+  <div className="flex justify-between text-sm text-[#5D5A53]">
+     <span>Envío</span>
+     <span className="italic">Por acordar (Gratis en Cali)</span>
+  </div>
+</div>
+
+<p className="text-xs text-[#A8A29E] mt-6 pt-6 border-t border-[#D6D1C7]">
+  El precio final depende de los acabados y personalización elegidos. Uno de nuestros artesanos te enviará la cotización exacta por WhatsApp.
+</p>
                </div>
             </div>
           </div>
